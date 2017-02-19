@@ -31,6 +31,7 @@ def Frequency(request):
     return render(request, 'frequency.html')
 
 def CommentCountHandler(requst):
+    # 返回json
     dict = {}
     for one in MovieCommentCount.objects.all():
         date = one.comment_date
