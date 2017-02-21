@@ -214,94 +214,84 @@
 <script src="/static/js/jquery.mixitup.js" type="text/javascript"></script>
 <script type="text/javascript" src="/static/js/jquery.quovolver.js"></script>
 
+{#以下echarts区#}
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 1400px;height:800px;"></div>
+<div id="main" style="width: 1200px;height:800px;"></div>
 <script type="text/javascript">
+    var countdata = function (echarts) {
 
-{#    使用AJAX动态加载数据#}
-    // 基于准备好的dom，初始化echarts实例
-    {#    $.getJSON("{% url 'demo:d-c-dict' %}", function (ret) {#}
-    {##}
-    {#    });#}
+        var myChart = echarts.init(document.getElementById('main'));
 
-    {#    var myChart = echarts.init(document.getElementById('main'));#}
-    {#    // 显示标题，图例和空的坐标轴#}
-    {#    myChart.setOption({#}
-    {#        title: {#}
-    {#            text: '异步数据加载示例'#}
-    {#        },#}
-    {#        tooltip: {},#}
-    {#        legend: {#}
-    {#            data: ['评论数']#}
-    {#        },#}
-    {#        xAxis: {#}
-    {#            data: []#}
-    {#        },#}
-    {##}
-    {#        yAxis: {},#}
-    {##}
-    {#        series: [{#}
-    {#            name: '评论数',#}
-    {#            type: 'bar',#}
-    {#            data: []#}
-    {#        }]#}
-    {#    });#}
-    {##}
-    {#    // 异步加载数据#}
-    {#    $.getJSON("{% url 'demo:d-c-dict' %}", function (ret) {#}
-    {#        // 填入数据#}
-    {#        myChart.setOption({#}
-    {#            xAxis: {#}
-    {#                data: data.date#}
-    {#            },#}
-    {#            series: [{#}
-    {#                // 根据名字对应到相应的系列#}
-    {#                name: '评论数',#}
-    {#                data: data[date]#}
-    {#            }]#}
-    {#        });#}
-    {#    });#}
-    // }
+        // 数据库数据插入
+        var dateDict = [
+            {% for one_data in data_source %}
+                {date: '{{ one_data.comment_date }}', value: {{ one_data.comment_count }}},
+            {% endfor %}
+        ]
+        var date = []
 
-    var myChart = echarts.init(document.getElementById('main'));
+        for (var i = 0; i < dateDict.length; i++) {
+            var e = dateDict[i].date
+            date.push(e)
+            // console.log('e', e)
+        }
 
-    // 指定图表的配置项和数据
-    var option = {
-                title: {
-                    text: '测试'
-                },
-                tooltip: {},
-                legend: {
-                    data: ['评论数']
-                },
-                xAxis: {
-                    data: []
-                },
-                yAxis: {},
-                series: [{
-                    name: '评论数',
-                    type: 'bar',
-                    data: (function () {
-                        $.ajax({
-                            async: false,
-                            url: "{% url 'demo:d-c-dict' %}",
-                            dataType: "json",
-                            success: function (data) {
-                                var rows = eval(data);
-                                //调用函数获取值，转换成数组模式
-                                for (var i = 0; i < rows.length; i++) {
-                                    arrY.push(rows[i].accountAmt);
-                                }
-                            }
-                        });
-                    })
-                }]
+
+        // 循环每个城市的数据
+        var dateData = function (array) {
+            var data = []
+            for (var i = 0; i < array.length; i++) {
+                var e = array[i]
+                data.push(e)
+                // console.log('e', e)
             }
-            ;
+            return data
+        }
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+        var option = {
+            title: {
+                left: 'left',
+                text: '日期-评论数据',
+            },
+            tooltip: {
+                trigger: 'axis',
+                show: true,
+            },
+            legend: {
+                data: ['销量']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: date
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                }
+            ],
+            series: [
+                {
+                    name: "销量",
+                    type: "line",
+                    data: dateDict,
+                    {#                    data: dateData(dateDict)#}
+
+                },
+
+            ]
+        };
+
+        myChart.setOption(option);
+        {#        myChart.showLoading();#}
+        myChart.hideLoading();
+    };
+    // 函数调用
+    countdata(echarts)
+
 </script>
+{#echarts结束#}
 
 <!--for smooth scrolling-->
 <script>

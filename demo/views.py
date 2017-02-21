@@ -17,18 +17,29 @@ def index(request):
         # moviename = form.cleaned_data['moviename']
         # print(moviename)
         # return redirect('/demo/comment/?movie'+moviename)
-        return redirect('/demo/commentsnum')
-    else:
+        name = request.POST.get("moviename")
+        print(name)
+        data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+        return render(request, 'comment.html', {"data_source": data_source})
+    elif request.method == 'GET':
         return render(request, 'index.html')
 
 
 def CommentsCount(request):
     # CommentCountHandler(request)
-    return render(request, 'comment.html')
+    if request.method == 'POST':
+        name = request.POST.get("moviename")
+        # print(year)
+        data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+        return render(request, 'comment.html', {"data_source": data_source})
+        # return render(request, 'comment.html')
+    elif request.method == 'GET':
+        return render(request, 'index_comment.html')
 
 
 def Frequency(request):
     return render(request, 'frequency.html')
+
 
 def CommentCountHandler(requst):
     # 返回json

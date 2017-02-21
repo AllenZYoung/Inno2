@@ -32,8 +32,18 @@ class CommentBase(models.Model):
 
 class MovieCommentCount(models.Model):
     comment_movie = models.ForeignKey(MovieBase)
+    comment_movie_name = MovieBase.name
     comment_date = models.CharField(max_length=10, null=False)
     comment_count = models.IntegerField()
 
     class Meta:
         db_table = 'moviecommentcount'
+
+class CommentWord(models.Model):
+    comment_movie = models.ForeignKey(MovieBase)
+    comment_movie_name = MovieBase.name
+    comment_word = models.CharField(max_length=50, null=False)
+    comment_word_count = models.IntegerField()
+
+    class Meta:
+        db_table = 'moviecommentword'
