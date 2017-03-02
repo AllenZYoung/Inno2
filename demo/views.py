@@ -12,7 +12,7 @@ def index(request):
     if request.method == 'POST':
         form = MovieSearchForm(request.POST)
         if not form.is_valid():
-            pass
+            return render(request, 'comment.html', {"is_valid": True})
         print(form)
         # moviename = form.cleaned_data['moviename']
         # print(moviename)
@@ -38,7 +38,14 @@ def CommentsCount(request):
 
 
 def Frequency(request):
-    return render(request, 'frequency.html')
+    if request.method == 'POST':
+        name = request.POST.get("moviename")
+        print(name)
+        data_source = CommentWordDictProducer(name)
+        return render(request, 'frequency1.html', {"data_source": data_source})
+        # return render(request, 'comment.html')
+    elif request.method == 'GET':
+        return render(request, 'index_frequency.html')
 
 
 def CommentCountHandler(requst):
@@ -49,3 +56,20 @@ def CommentCountHandler(requst):
         dict[date] = one.comment_count
     print(dict)
     return JsonResponse(dict)
+
+def CommentWordDictProducer(name):
+    raw_movie = MovieBase.objects.filter(name=name).first()
+    if (raw_movie is None):
+        pass
+    raw_data = CommentWord.objects.filter(comment_movie=raw_movie)
+    raw_dict = []
+    print(raw_data)
+    for ones in raw_data:
+        print(ones)
+        # raw_dict[ones.comment_word] = ones.comment_word_count
+        raw_dict.append(ones)
+        if len(raw_dict) > 40:
+            break
+    print(raw_dict)
+    return raw_dict
+

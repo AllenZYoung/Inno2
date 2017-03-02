@@ -17,6 +17,9 @@ import djcelery
 pymysql.install_as_MySQLdb()
 djcelery.setup_loader()
 
+# import django
+# django.setup()
+
 BROKER_URL = 'django://'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'demo.apps.DemoConfig',
+    'django.contrib.sites',
+    # 'models.CommentBase',
+    # 'models.MovieCommentCount',
+    # 'models.CommentWord'
     # 'djcelery',
     # 'kombu.transport.'
 ]

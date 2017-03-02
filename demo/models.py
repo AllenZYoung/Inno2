@@ -11,6 +11,7 @@ class MovieBase(models.Model):
 
     class Meta:
         db_table = 'moviebase'
+        # app_label = 'MovieBase'
 
     # tostring
     def __str__(self):
@@ -25,10 +26,12 @@ class CommentBase(models.Model):
 
     class Meta:
         db_table = 'commentbase'
+        # app_label = 'CommentBase'
 
     # tostring
     def __str__(self):
         return 'comment: %s' % (self.comment_content)
+
 
 class MovieCommentCount(models.Model):
     comment_movie = models.ForeignKey(MovieBase)
@@ -38,6 +41,9 @@ class MovieCommentCount(models.Model):
 
     class Meta:
         db_table = 'moviecommentcount'
+        # app_label = 'MovieCommentCount'
+
+
 
 class CommentWord(models.Model):
     comment_movie = models.ForeignKey(MovieBase)
@@ -47,3 +53,5 @@ class CommentWord(models.Model):
 
     class Meta:
         db_table = 'moviecommentword'
+        # app_label = 'CommentWord'
+

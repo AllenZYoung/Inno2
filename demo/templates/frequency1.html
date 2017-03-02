@@ -223,47 +223,52 @@
         var myChart = echarts.init(document.getElementById('main'));
 
         // 数据库数据插入
-        var dateDict = [
+        var dataSet = [
             {% for one_data in data_source %}
-                {date: '{{ one_data.comment_date }}', value: {{ one_data.comment_count }}},
+                {word: '{{ one_data.comment_word }}', count: {{ one_data.comment_word_count }}},
             {% endfor %}
         ]
-        var date = []
+        var word = []
 
-        for (var i = 0; i < dateDict.length; i++) {
-            var e = dateDict[i].date
-            date.push(e)
+        for (var i = 0; i < dataSet.length; i++) {
+            var e = dataSet[i].word
+            word.push(e)
+        }
+        var count = []
+
+        for (var i = 0; i < dataSet.length; i++) {
+            var e = dataSet[i].count
+            count.push(e)
         }
 
 
-
-        // 循环每个城市的数据
-        var dateData = function (array) {
-            var data = []
-            for (var i = 0; i < array.length; i++) {
-                var e = array[i]
-                data.push(e)
-                // console.log('e', e)
-            }
-            return data
-        }
+{#        // 循环每个城市的数据#}
+{#        var dateData = function (array) {#}
+{#            var data = []#}
+{#            for (var i = 0; i < array.length; i++) {#}
+{#                var e = array[i]#}
+{#                data.push(e)#}
+{#                // console.log('e', e)#}
+{#            }#}
+{#            return data#}
+{#        }#}
 
         var option = {
             title: {
                 left: 'left',
-                text: '日期-评论数据',
+                text: '词频数据',
             },
             tooltip: {
                 trigger: 'axis',
                 show: true,
             },
             legend: {
-                data: ['销量']
+                data: ['词频']
             },
             xAxis: [
                 {
-                    type: 'category',
-                    data: date
+{#                    type: 'category',#}
+                    data: word,
                 }
             ],
             yAxis: [
@@ -273,9 +278,9 @@
             ],
             series: [
                 {
-                    name: "销量",
-                    type: "line",
-                    data: dateDict,
+                    name: "词频",
+                    type: "bar",
+                    data: count,
                     {#                    data: dateData(dateDict)#}
 
                 },
