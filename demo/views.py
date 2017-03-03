@@ -12,7 +12,7 @@ def index(request):
     if request.method == 'POST':
         form = MovieSearchForm(request.POST)
         if not form.is_valid():
-            return render(request, 'comment.html', {"is_valid": True})
+            return render(request, 'index.html', {'invalid_error': '您的输入有误，请重新输入！'})
         print(form)
         # moviename = form.cleaned_data['moviename']
         # print(moviename)
@@ -20,6 +20,8 @@ def index(request):
         name = request.POST.get("moviename")
         print(name)
         data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+        if not data_source:
+            return render(request, 'index.html', {'invalid_error': '无法找到该电影的信息！'})
         return render(request, 'comment.html', {"data_source": data_source})
     elif request.method == 'GET':
         return render(request, 'index.html')
@@ -31,6 +33,8 @@ def CommentsCount(request):
         name = request.POST.get("moviename")
         # print(year)
         data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+        if not data_source:
+            return render(request, 'index_comment.html', {"comment_error": "无法找到有关影片的评论信息分析！"})
         return render(request, 'comment.html', {"data_source": data_source})
         # return render(request, 'comment.html')
     elif request.method == 'GET':
@@ -42,6 +46,8 @@ def Frequency(request):
         name = request.POST.get("moviename")
         print(name)
         data_source = CommentWordDictProducer(name)
+        if not data_source:
+            return render(request, 'index_frequency.html', {"freq_error": "无法找到该影片的词频分析情况！"})
         return render(request, 'frequency1.html', {"data_source": data_source})
         # return render(request, 'comment.html')
     elif request.method == 'GET':

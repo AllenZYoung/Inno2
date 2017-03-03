@@ -116,6 +116,11 @@
 
 <!--for smooth scrolling-->
 <script>
+    $(function(){
+            if('{{ freq_error }}'){
+                alert('{{ freq_error }}');
+            }
+    });
     $(function () {
         $('a[href*=#]:not([href=#])').click(function () {
             if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
