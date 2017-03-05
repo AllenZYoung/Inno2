@@ -8,50 +8,73 @@ from django.http import JsonResponse
 
 # Create your views here.
 
+
 def index(request):
     if request.method == 'POST':
-        form = MovieSearchForm(request.POST)
-        if not form.is_valid():
-            return render(request, 'index.html', {'invalid_error': '您的输入有误，请重新输入！'})
-        print(form)
-        # moviename = form.cleaned_data['moviename']
-        # print(moviename)
-        # return redirect('/demo/comment/?movie'+moviename)
-        name = request.POST.get("moviename")
-        print(name)
-        data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
-        if not data_source:
-            return render(request, 'index.html', {'invalid_error': '无法找到该电影的信息！'})
-        return render(request, 'comment.html', {"data_source": data_source})
-    elif request.method == 'GET':
-        return render(request, 'index.html')
+        target = request.POST.get('target')
+        if target == 'index' or target == 'commentscount':
+            return CommentsCount(request)
+        elif target == 'frequency':
+            return Frequency(request)
+    else:
+        form = MovieSearchForm()
+        return render(request, 'index.html', {'form': form, 'target_value': 'index',
+                                              'message': '请查找你想知道的信息'})
 
 
 def CommentsCount(request):
-    # CommentCountHandler(request)
-    if request.method == 'POST':
-        name = request.POST.get("moviename")
-        # print(year)
-        data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
-        if not data_source:
-            return render(request, 'index_comment.html', {"comment_error": "无法找到有关影片的评论信息分析！"})
-        return render(request, 'comment.html', {"data_source": data_source})
-        # return render(request, 'comment.html')
-    elif request.method == 'GET':
-        return render(request, 'index_comment.html')
+    name = request.POST.get('moviename')
+    data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+    if not data_source:
+        target = request.POST.get('target')
+        if target == 'index':
+            message = '请查找你想知道的信息'
+        else:
+            message = '日期-评论数分析'
+        form = MovieSearchForm()
+        return render(request, 'index.html', {'form': form, "error": "无法找到有关影片的评论信息分析！",
+                                              'target_value': 'commentscount',
+                                              'message': message})
+    return render(request, 'comment.html', {"data_source": data_source})
 
 
 def Frequency(request):
-    if request.method == 'POST':
-        name = request.POST.get("moviename")
-        print(name)
-        data_source = CommentWordDictProducer(name)
-        if not data_source:
-            return render(request, 'index_frequency.html', {"freq_error": "无法找到该影片的词频分析情况！"})
-        return render(request, 'frequency1.html', {"data_source": data_source})
-        # return render(request, 'comment.html')
-    elif request.method == 'GET':
-        return render(request, 'index_frequency.html')
+    name = request.POST.get("moviename")
+    print(name)
+    data_source = CommentWordDictProducer(name)
+    if not data_source:
+        form = MovieSearchForm()
+        return render(request, 'index.html', {'form':form, "error": "无法找到该影片的词频分析情况！",
+                                                        'target_value': 'frequency', 'message': '词频统计'})
+    return render(request, 'frequency1.html', {"data_source": data_source})
+
+
+
+# def CommentsCount(request):
+#     # CommentCountHandler(request)
+#     if request.method == 'POST':
+#         name = request.POST.get("moviename")
+#         # print(year)
+#         data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+#         if not data_source:
+#             return render(request, 'index_comment.html', {"comment_error": "无法找到有关影片的评论信息分析！"})
+#         return render(request, 'comment.html', {"data_source": data_source})
+#         # return render(request, 'comment.html')
+#     elif request.method == 'GET':
+#         return render(request, 'index_comment.html')
+#
+#
+# def Frequency(request):
+#     if request.method == 'POST':
+#         name = request.POST.get("moviename")
+#         print(name)
+#         data_source = CommentWordDictProducer(name)
+#         if not data_source:
+#             return render(request, 'index_frequency.html', {"freq_error": "无法找到该影片的词频分析情况！"})
+#         return render(request, 'frequency1.html', {"data_source": data_source})
+#         # return render(request, 'comment.html')
+#     elif request.method == 'GET':
+#         return render(request, 'index_frequency.html')
 
 
 def CommentCountHandler(requst):
