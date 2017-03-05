@@ -37,8 +37,8 @@
                             <div class="collapse navbar-collapse navbar-right" id="myNavbar">
                                 <ul class="nav navbar-nav">
                                     <li class="active"><a href="/demo">主页</a></li>
-                                    <li><a href="/demo/freq">词频统计</a></li>
-                                    <li><a href="/demo/commentsnum/">日期评论数分析</a></li>
+                                    <li><a href="javascript:void(0)" id="frequency">词频统计</a></li>
+                                    <li><a href="javascript:void(0)" id="commentscount">日期评论数分析</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -56,12 +56,12 @@
                     </div>
 
                     <div class="banner-heading text-center">
-                        <h3>请查找你想知道的信息</h3>
+                        <h3 id="h3-message">{{ message }}</h3>
                     </div>
 
                     <form action="" method="post" novalidate="novalidate">                            {% csrf_token %}
                         {% csrf_token %}
-
+                        <input type="hidden" name="target" id="target"value="{{ target_value }}">
                         <div class="banner-search col-md-offset-2 col-md-8 col-md-offset-2">
                             <div class="col-md-3">
                                 <select class="form-control sellone">
@@ -72,8 +72,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control selltwo" name="moviename"
-                                           placeholder="长城">{{ form.moviename.text }}
+{#                                    <input type="text" class="form-control selltwo" name="moviename"#}
+{#                                           placeholder="长城" required="required">{{ form.moviename.text }}#}
+                                    {{ form.moviename }}
                                     {#                                    <label class="form-control selltwo">{{ form.moviename.label }}</label>#}
                                 </div>
                             </div>
@@ -116,6 +117,28 @@
 
 <!--for smooth scrolling-->
 <script>
+    $('#frequency').click(function () {
+        $('#target').val('frequency');
+        $('#h3-message').text('词频统计');
+    });
+    $('#commentscount').click(function () {
+        $('#target').val('commentscount');
+        $('#h3-message').text('日期-评论数分析');
+    });
+
+    $('.form-action').click(function(){
+        var name = $('.form-control.selltwo').val();
+        if(name==null || name==""){
+            alert("请输入电影名称！");
+            return false;
+        }
+    });
+    $(function(){
+		if('{{ error }}'){
+			alert('{{ error }}');
+		}
+	});
+
     $(function () {
         $('a[href*=#]:not([href=#])').click(function () {
             if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
