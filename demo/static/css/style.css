@@ -4,7 +4,7 @@
 	padding: 0px;
 }
 body {
-	color:#6F7478;
+	color:#FFFFFF;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	font-weight: 300;
@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6
 }
 h2
 {
-	color:#555;
+	color:#EAF63E;
 	font-size: 24px;
 	letter-spacing: 3px;
 	padding: 0px;
@@ -60,7 +60,7 @@ hr
 /**header section**/
 .main-header
 {
-	background: url("../img/banner.jpg") 0% 0% / 100% no-repeat fixed;
+	/*background: url("../img/banner.jpg") 0% 0% / 100% no-repeat fixed;*/
 	width: 100%;
 	float: left;
 	background-size: cover;
@@ -69,10 +69,11 @@ hr
 {
 	width: 100%;
 	float: left;
-	background-color: rgba(37, 35, 50, 0.67);
+	background-color:#FFFFFF;
 	padding-bottom: 100px;
 	
 }
+
 .main-header .navigation-bar
 {
 	margin-top: 50px;
@@ -94,6 +95,7 @@ hr
 {
 	margin: 0px;
 	padding: 15px 0px;
+	background-color:#20D2F1;
 }
 .main-header .navigation-bar .navbar-default .navbar-nav > li
 {
@@ -101,7 +103,7 @@ hr
 }
 .main-header .navigation-bar .navbar-default .navbar-nav > li > a {
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 300;
     letter-spacing: 0.5px;
 }
@@ -110,11 +112,11 @@ hr
 }
 .main-header .navigation-bar .navbar-default .navbar-nav > .active > a
 {
-	color: #8FA5AF;
-	background-color: #fff;
+	color: rgba(24, 25, 30, 0.7);
+	background-color: #20D2F1;
 }
 .grey {
-	color: #F84B4A;
+	color:#20D2F1;
 }
 
 .main-header .banner-text
@@ -132,7 +134,7 @@ hr
 }
 .banner-info h2
 {
-	color: #fff;
+	color:#C7CC29;
 	font-size: 65px;
 	padding-bottom: 100px;
 }
@@ -144,12 +146,13 @@ hr
 .main-header .banner-text .banner-heading h3
 {
 	font-size: 28px;
-	color: #FFF;
+	color: #20D2F1;
 	padding-bottom: 80px;
 }
 .mt h3
 {
-	color:#FFF;
+	color:rgba(24, 25, 30, 0.7);
+	margin-left:-6%;
 }
 
 .mt p
@@ -165,7 +168,6 @@ hr
 
 .main-header .banner-text .banner-search
 {
-	background: rgba(143, 165, 175, 0.33);
 	padding: 15px 0px;
 	margin-bottom:50px;
 	border-radius: 5px;
@@ -194,7 +196,7 @@ hr
 }
 .main-header .banner-text .banner-search .form-btn button:hover
 {
-	background-color: #F84B4A;
+	background-color:#C7CC29 ;
 	transition: all 0.8s ease-in 0s;
 }
 /**intro section**/
@@ -203,7 +205,7 @@ hr
 {
 	width: 100%;
 	float: left;
-	background-color: #F84B4A;
+	background-color: #20D2F1;
 	padding: 40px 0px;
 	color:#fff;
 	padding-top:1.6%;
@@ -244,7 +246,7 @@ hr
 }
 .panel-body th
 {
-	color:#FFFFFF;
+	color:rgba(24, 25, 30, 0.7);
 }
 
 .panel-body td
@@ -258,6 +260,10 @@ hr
 	font-size:32px;
 	color:#FFFFFF;
 }
+.p_footer{
+	color:rgba(24, 25, 30, 0.7); 
+	font-size:18px;
+}
 .progress thin .progress-bar progress-bar-danger
 {
 	
@@ -265,6 +271,16 @@ hr
 
 .progress thin .progress-bar progress-bar-warning
 {
+}
+
+.information_body{
+	height:300px;
+	width:450px;
+}
+
+.information_p{
+	color:rgba(24, 25, 30, 0.7);
+	font-size:24px;
 }
 
 @media (min-width: 768px) and (max-width: 991px) 

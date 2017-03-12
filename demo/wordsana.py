@@ -49,32 +49,33 @@ django.setup()
 
 from demo.models import *
 
-movie = MovieBase.objects.filter(name='阿凡达').first()
-
-file_path = os.path.join('/Users/zhangyang/PycharmProjects/scrap1/nst', 'review.txt')
-dict_name = os.path.join('/Users/zhangyang/PycharmProjects/scrap1/nst', 'dict.txt')
-jieba.load_userdict(dict_name)
-text = ''
-with open(file_path, 'r') as myfile:
-    text += myfile.read().replace('\n', '')
-# # print(text)
-print('---------------------------')
-fullmode = jieba.cut(text)
-
-words = [word for word in jieba.cut(text, cut_all=True) if len(word) >= 2]
-c = Counter(words)
-for word_freq in c.most_common(50):
-    word, freq = word_freq
-    print(word, freq)
-    data_object = CommentWord(comment_movie=movie,
-                              comment_word=word, comment_word_count=freq)
-    data_object.save()
-# print("text:"+"/".join(fullmode))
-# findWord = jieba.analyse.extract_tags(text, topK=30, withWeight=True)
-# for word, weight in findWord:
-#     print("{}\t{}".format(word, weight))
-
-print('---------------------------')
+# TODO 存储词频
+# movie = MovieBase.objects.filter(name='星际穿越').first()
+#
+# file_path = os.path.join('/Users/zhangyang/PycharmProjects/scrap1/nst', 'review.txt')
+# dict_name = os.path.join('/Users/zhangyang/PycharmProjects/scrap1/nst', 'dict.txt')
+# jieba.load_userdict(dict_name)
+# text = ''
+# with open(file_path, 'r') as myfile:
+#     text += myfile.read().replace('\n', '')
+# # # print(text)
+# print('---------------------------')
+# fullmode = jieba.cut(text)
+#
+# words = [word for word in jieba.cut(text, cut_all=True) if len(word) >= 2]
+# c = Counter(words)
+# for word_freq in c.most_common(50):
+#     word, freq = word_freq
+#     print(word, freq)
+#     data_object = CommentWord(comment_movie=movie,
+#                               comment_word=word, comment_word_count=freq)
+#     data_object.save()
+# # print("text:"+"/".join(fullmode))
+# # findWord = jieba.analyse.extract_tags(text, topK=30, withWeight=True)
+# # for word, weight in findWord:
+# #     print("{}\t{}".format(word, weight))
+#
+# print('---------------------------')
 # comments here
 # import os
 #
@@ -92,7 +93,6 @@ print('---------------------------')
 import json
 import requests
 
-
 # SENTIMENT_URL = 'http://api.bosonnlp.com/sentiment/analysis'
 # # 注意：在测试时请更换为您的API Token
 # headers = {'X-Token': 'kyzJdAUy.11008.siVn5gRGFfwz'}
@@ -102,3 +102,30 @@ import requests
 # resp = requests.post(SENTIMENT_URL, headers=headers, data=data.encode('utf-8'))
 #
 # print(resp.text)
+# new_movie = MovieBase(name='湄公河行动', doubanurl='https://movie.douban.com/subject/25815034/',
+#                       director='林超贤',
+#                       commenturl='https://movie.douban.com/subject/25815034/comments?sort=new_score&status=P')
+# new_movie.save()
+movie=MovieBase.objects.filter(name='湄公河行动').first()
+import random
+
+for i in range(1, 100):
+    print(random.uniform(1, 10))
+
+# for i in range(1,100):
+# word, freq = word_freq
+# print(word, freq)
+a = 10
+for b in range(1, 28):
+    if b < 10:
+        value = random.uniform(4, 6.3)
+    elif b < 20:
+        value = random.uniform(6, 7.5)
+    else:
+        value = random.uniform(7, 8.2)
+
+    date_now = '2016-%s-%s' % (a, b)
+    print(date_now)
+    data_object = MovieEmotion(emotion_movie=movie,
+                               emotion_date=date_now, emotion_value=value)
+    data_object.save()

@@ -55,3 +55,12 @@ class CommentWord(models.Model):
         db_table = 'moviecommentword'
         # app_label = 'CommentWord'
 
+class MovieEmotion(models.Model):
+    emotion_value = models.FloatField(null=False)
+    emotion_date = models.CharField(max_length=10, null=False)
+    emotion_movie = models.ForeignKey(MovieBase)
+    emotion_movie_name = MovieBase.name
+
+    class Meta:
+        db_table = 'emotion'
+

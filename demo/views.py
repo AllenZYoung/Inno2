@@ -16,6 +16,10 @@ def index(request):
             return CommentsCount(request)
         elif target == 'frequency':
             return Frequency(request)
+        elif target == 'emotion':
+            return Emotion(request)
+        elif target == 'userlocation':
+            return Userloc(request)
     else:
         form = MovieSearchForm()
         return render(request, 'index.html', {'form': form, 'target_value': 'index',
@@ -23,31 +27,85 @@ def index(request):
 
 
 def CommentsCount(request):
-    name = request.POST.get('moviename')
-    data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
-    if not data_source:
-        target = request.POST.get('target')
-        if target == 'index':
-            message = '请查找你想知道的信息'
+    if request.method == 'POST':
+        name = request.POST.get('moviename')
+        data_source = MovieCommentCount.objects.filter(comment_movie__name=name)
+        if not data_source:
+            target = request.POST.get('target')
+            if target == 'index':
+                message = '请查找你想知道的信息'
+            else:
+                message = '日期-评论数分析'
+            form = MovieSearchForm()
+            return render(request, 'index.html', {'form': form, "error": "无法找到有关影片的评论信息分析！",
+                                                  'target_value': 'commentscount',
+                                                  'message': message})
         else:
-            message = '日期-评论数分析'
-        form = MovieSearchForm()
-        return render(request, 'index.html', {'form': form, "error": "无法找到有关影片的评论信息分析！",
-                                              'target_value': 'commentscount',
-                                              'message': message})
-    return render(request, 'comment.html', {"data_source": data_source})
+            print("the data source here is {}".format(str(data_source)))
+            return render(request, 'comment.html', {"data_source": data_source})
+    else:
+        return render(request, 'index_comment.html')
 
 
 def Frequency(request):
-    name = request.POST.get("moviename")
-    print(name)
-    data_source = CommentWordDictProducer(name)
-    if not data_source:
-        form = MovieSearchForm()
-        return render(request, 'index.html', {'form':form, "error": "无法找到该影片的词频分析情况！",
-                                                        'target_value': 'frequency', 'message': '词频统计'})
-    return render(request, 'frequency1.html', {"data_source": data_source})
+    if request.method == 'POST':
+        name = request.POST.get("moviename")
+        print(name)
+        data_source = CommentWordDictProducer(name)
+        if not data_source:
+            form = MovieSearchForm()
+            return render(request, 'index.html', {'form': form, "error": "无法找到该影片的词频分析情况！",
+                                                  'target_value': 'frequency', 'message': '词频统计'})
+        return render(request, 'frequency1.html', {"data_source": data_source})
+    else:
+        return render(request, 'frequency1.html', )
 
+
+def Emotion(request):
+    if request.method == 'POST':
+        name = request.POST.get('moviename')
+        movie = MovieBase.objects.filter(name=name)
+        data_source = MovieEmotion.objects.filter(emotion_movie=movie)
+        if not data_source:
+            target = request.POST.get('target')
+            if target == 'index':
+                message = '请查找你想知道的信息'
+            else:
+                message = '情感极性变化'
+            form = MovieSearchForm()
+            return render(request, 'index.html', {'form': form, "error": "无法找到有关影片的信息分析！",
+                                                  'target_value': 'commentscount',
+                                                  'message': message})
+        else:
+            print("the data source here is {}".format(str(data_source)))
+            print(movie)
+            return render(request, 'emotion.html', {"data_source": data_source, 'movie': movie})
+    else:
+        return render(request, 'emotion.html')
+
+
+def Userloc(request):
+    if request.method == 'POST':
+        # name = request.POST.get('moviename')
+        # movie = MovieBase.objects.filter(name=name)
+        # data_source = MovieEmotion.objects.filter(emotion_movie=movie)
+        # if not data_source:
+        #     target = request.POST.get('target')
+        #     if target == 'index':
+        #         message = '请查找你想知道的信息'
+        #     else:
+        #         message = '情感极性变化'
+        #     form = MovieSearchForm()
+        #     return render(request, 'index.html', {'form': form, "error": "无法找到有关影片的信息分析！",
+        #                                           'target_value': 'commentscount',
+        #                                           'message': message})
+        return render(request, 'user_characteristics.html')
+        # else:
+        #     print("the data source here is {}".format(str(data_source)))
+        #     print(movie)
+        #     return render(request, 'emotion.html', {"data_source": data_source, 'movie': movie})
+    else:
+        return render(request, 'user_characteristics.html')
 
 
 # def CommentsCount(request):
@@ -86,6 +144,7 @@ def CommentCountHandler(requst):
     print(dict)
     return JsonResponse(dict)
 
+
 def CommentWordDictProducer(name):
     raw_movie = MovieBase.objects.filter(name=name).first()
     if (raw_movie is None):
@@ -102,3 +161,9 @@ def CommentWordDictProducer(name):
     print(raw_dict)
     return raw_dict
 
+
+def EmotionDataProducer(name):
+    pass
+
+def UserLocationRender(request):
+    return render(request,'user_characteristics_map.html')

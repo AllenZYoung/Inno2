@@ -51,7 +51,10 @@
         </div>
         <!--banner starts-->
         <div class="banner-text">
+
             <div class="container">
+                <div id="main" style="width: 1200px;height:800px;"></div>
+
                 <div class="row">
                     <div class="panel-body">
                         <table class="table bootstrap-datatable countries">
@@ -69,8 +72,8 @@
                             <tr>
                                 <!--<td><img src="img/Germany.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-01</td>
-                                <td>2563</td>
-                                <td>1025</td>
+                                <td>53</td>
+                                <td>15</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -88,8 +91,8 @@
                             <tr>
                                 <!--<td><img src="img/India.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-02</td>
-                                <td>3652</td>
-                                <td>2563</td>
+                                <td>35</td>
+                                <td>23</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -107,8 +110,8 @@
                             <tr>
                                 <!--<td><img src="img/Spain.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-03</td>
-                                <td>562</td>
-                                <td>452</td>
+                                <td>52</td>
+                                <td>45</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -125,8 +128,8 @@
                             <tr>
                                 <!--<td><img src="img/Russia.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-04</td>
-                                <td>1258</td>
-                                <td>958</td>
+                                <td>18</td>
+                                <td>8</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -144,8 +147,8 @@
                             <tr>
                                 <!--<td><img src="img/usa.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-05</td>
-                                <td>4856</td>
-                                <td>3621</td>
+                                <td>45</td>
+                                <td>6</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -163,8 +166,8 @@
                             <tr>
                                 <!--<td><img src="img/brazil.png" style="height:18px; margin-top:-2px;"></td>-->
                                 <td>2016-12-06</td>
-                                <td>265</td>
-                                <td>102</td>
+                                <td>6</td>
+                                <td>4</td>
                                 <td>
                                     <div class="progress thin">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
@@ -190,6 +193,7 @@
 
     <!--banner ends-->
 </header>
+
 <!--header ends-->
 <section class="intro-one">
 
@@ -216,7 +220,7 @@
 
 {#以下echarts区#}
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 1200px;height:800px;"></div>
+
 <script type="text/javascript">
     var countdata = function (echarts) {
 
@@ -242,17 +246,22 @@
         }
 
 
-{#        // 循环每个城市的数据#}
-{#        var dateData = function (array) {#}
-{#            var data = []#}
-{#            for (var i = 0; i < array.length; i++) {#}
-{#                var e = array[i]#}
-{#                data.push(e)#}
-{#                // console.log('e', e)#}
-{#            }#}
-{#            return data#}
-{#        }#}
+        {#        // 循环每个城市的数据#}
+        {#        var dateData = function (array) {#}
+        {#            var data = []#}
+        {#            for (var i = 0; i < array.length; i++) {#}
+        {#                var e = array[i]#}
+        {#                data.push(e)#}
+        {#                // console.log('e', e)#}
+        {#            }#}
+        {#            return data#}
+        {#        }#}
+        var yMax = count[0];
+        var dataShadow = [];
 
+        for (var j = 0; j < count.length; j++) {
+            dataShadow.push(yMax);
+        }
         var option = {
             title: {
                 left: 'left',
@@ -267,7 +276,7 @@
             },
             xAxis: [
                 {
-{#                    type: 'category',#}
+                    {#                    type: 'category',#}
                     data: word,
                 }
             ],
@@ -277,11 +286,44 @@
                 }
             ],
             series: [
+                { // For shadow
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {color: 'rgba(0,0,0,0.05)'}
+                    },
+                    barGap: '-100%',
+                    barCategoryGap: '40%',
+                    data: dataShadow,
+                    animation: false
+                },
                 {
                     name: "词频",
                     type: "bar",
                     data: count,
                     {#                    data: dateData(dateDict)#}
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        {offset: 0, color: '#83bff6'},
+                                        {offset: 0.5, color: '#188df0'},
+                                        {offset: 1, color: '#188df0'}
+                                    ]
+                            )
+                        },
+                        emphasis: {
+                            color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        {offset: 0, color: '#2378f7'},
+                                        {offset: 0.7, color: '#2378f7'},
+                                        {offset: 1, color: '#83bff6'}
+                                    ]
+                            )
+                        }
+                    },
+
 
                 },
 

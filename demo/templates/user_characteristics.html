@@ -13,12 +13,112 @@
     <!--[if lt IE 9]-->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <script src="/static/js/echarts.common.min.js"></script>
+    <script src="/static/js/echarts.min.js"></script>
 
     <!--[endif]-->
 </head>
 <body>
 <!--header starts-->
+{#以下echarts区#}
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="mainarea" style="width: 1500px;height:800px;"></div>
+<script type="text/javascript">
+
+    var myChart = echarts.init(document.getElementById('mainarea'));
+
+    {#    app.title = '环形图';#}
+    var data = [{
+        value: 3994,
+        name: '东南地区'
+    }, {
+        value: 1028,
+        name: '东北地区'
+    }, {
+        value: 1356,
+        name: '西北地区'
+    }, {
+        value: 3551,
+        name: '中部地区'
+    }, {
+        value: 3251,
+        name: '西南地区'
+    }];
+    option = {
+        backgroundColor: '#fff',
+        title: {
+            text: '评论来源地区',
+            subtext: '湄公河行动 2016年9月',
+            x: 'center',
+            y: 'center',
+            textStyle: {
+                fontWeight: 'normal',
+                fontSize: 16
+            }
+        },
+        tooltip: {
+            show: true,
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            bottom: '0%',
+            data: ['东南地区', '东北地区', '西北地区', '中部地区', '西南地区']
+        },
+        series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['25%', '58%'],
+            color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67'],
+
+            label: {
+                normal: {
+                    position: 'inner',
+                    formatter: '{d}%',
+
+                    textStyle: {
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        fontSize: 14
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data: data
+        }, {
+            type: 'pie',
+            radius: ['58%', '83%'],
+            itemStyle: {
+                normal: {
+                    color: '#F2F2F2'
+                },
+                emphasis: {
+                    color: '#ADADAD'
+                }
+            },
+            label: {
+                normal: {
+                    position: 'inner',
+                    formatter: '{c}人次',
+                    textStyle: {
+                        color: '#777777',
+                        fontWeight: 'bold',
+                        fontSize: 14
+                    }
+                }
+            },
+            data: data
+        }]
+    };
+
+    myChart.setOption(option);
+</script>
+{#echarts结束#}
+
 <header class="main-header">
     <div class="backbg-color">
         <div class="navigation-bar">
@@ -40,10 +140,10 @@
                                 <ul class="nav navbar-nav">
                                     <li><a href="/demo">主页</a></li>
                                     <li><a href="/demo/freq">词频统计</a></li>
-                                    <li class="active"><a href="/demo/commentsnum">日期评论数分析</a></li>
+                                    <li><a href="/demo/commentsnum">日期评论数分析</a></li>
                                     <li><a href="">情感分析</a></li>
                                     <li><a href="">评论摘要</a></li>
-                                    <li><a href="">用户特征</a></li>
+                                    <li class="active"><a href="">用户特征</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -53,44 +153,44 @@
             </div>
         </div>
         <!--banner starts-->
+        <div class="banner-text">
+            <div class="container">
+                {#以下echarts区#}
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div class="row" style="height:1200px; width:800px; margin-left:15%; margin-bottom:50px"></div>
 
-        <div class="row">
-            <div class="panel-body">
-                <table class="table bootstrap-datatable countries">
-                    <caption style="color:rgba(24, 25, 30, 0.7)"> {{ name }} </caption>
-                    <thead>
-                    <tr>
-                        <th>日期</th>
-                        <th>评价数量</th>
-                        <th>好评数量</th>
-                        <th>综合评价</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {#                            {% for item in data_source %}#}
-                    {#                            <tr>#}
-                    {#                                <td>{{ item.date }}</td>#}
-                    {#                                <td>{{ item.comments_num }}</td>#}
-                    {#                                <td>{{ item.good_comments_num }}</td>#}
-                    {#                                <td>#}
-                    {#                                    <div class="progress thin">#}
-                    {#                                        <div class="progress-bar progress-bar-danger" role="progressbar"#}
-                    {#                                             aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"#}
-                    {#                                             style="width: 73%">#}
-                    {#                                        </div>#}
-                    {#                                        <div class="progress-bar progress-bar-warning" role="progressbar"#}
-                    {#                                             aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"#}
-                    {#                                             style="width: 27%">#}
-                    {#                                        </div>#}
-                    {#                                    </div>#}
-                    {#                                </td>#}
-                    {#                            </tr>#}
-                    </tbody>
-                </table>
+                {#echarts结束#}
+                <div class="row">
+                    <div class="panel-body">
+                        <div class="information_body">
+                            <table class="information_body">
+                                <thead>
+                                <tr>
+                                    <th>影片名称</th>
+                                    <th>上映日期</th>
+                                    <th>xxxx</th>
+                                </tr>
+                                </thead>
+                                {#                            <tbody>#}
+                                {#                            {% for item in comments %}#}
+                                {#                            <tr>#}
+                                {#                                <td>{{ item.name }}</td>#}
+                                {#                                <td>{{ item.date }}</td>#}
+                                {#                                <td>{{ item.team }}</td>#}
+                                {#                            </tr>#}
+                                {#                            </tbody>#}
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+    <!--banner ends-->
 </header>
+<!--header ends-->
 <section class="intro-one">
 
     <div class="container">
@@ -105,87 +205,6 @@
     </div>
 
 </section>
-    <div id="main" style="width: 1200px;height:1000px;"></div>
-    <script type="text/javascript">
-        var countdata = function (echarts) {
-
-            var myChart = echarts.init(document.getElementById('main'));
-
-            // 数据库数据插入
-            var dateDict = [
-                {% for one_data in data_source %}
-                    {date: '{{ one_data.comment_date }}', value: {{ one_data.comment_count }}},
-                {% endfor %}
-            ]
-            var date = []
-
-            for (var i = 0; i < dateDict.length; i++) {
-                var e = dateDict[i].date
-                date.push(e)
-                // console.log('e', e)
-            }
-
-
-            // 循环每个城市的数据
-            var dateData = function (array) {
-                var data = []
-                for (var i = 0; i < array.length; i++) {
-                    var e = array[i]
-                    data.push(e)
-                    // console.log('e', e)
-                }
-                return data
-            }
-
-            var option = {
-                title: {
-                    left: 'left',
-                    text: '日期-评论数据',
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    show: true,
-                },
-                legend: {
-                    data: ['评论数']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: date
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                    }
-                ],
-                series: [
-                    {
-                        name: "评论数",
-                        type: "line",
-                        data: dateDict,
-                        {#                    data: dateData(dateDict)#}
-
-                    },
-
-                ]
-            };
-
-            myChart.setOption(option);
-            {#        myChart.showLoading();#}
-            myChart.hideLoading();
-        };
-        // 函数调用
-        countdata(echarts)
-
-    </script>
-    {#echarts结束#}
-
-
-    <!--banner ends-->
-<!--header ends-->
-
 
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
