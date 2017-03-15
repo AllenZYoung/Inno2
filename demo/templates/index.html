@@ -14,17 +14,64 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <!--[endif]-->
+    <style type="text/css">
+        body{
+            font-family: 微软雅黑;
+        }
+        .banner-info h2{
+            font-family: 微软雅黑;
+            color: #3351b7;
+            font-size: 40px;
+        }
+        .main-header .banner-text .banner-heading h3{
+            font-family: 微软雅黑;
+            color: #080808;
+        }
+        .main-header .banner-text .banner-search .form-btn button{
+            background-color: #3385ff;
+            transition: all 0.2s ease-in 0s;
+        }
+        .main-header .banner-text .banner-search .form-btn button:hover{
+            background-color: #3351b7;
+            transition: all 0.2s ease-in 0s;
+        }
+        #mynav{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            height: 72px;
+            padding-top: 10px;
+        }
+        #myul li a{
+            font-size: large;
+            color: #101010;
+        }
+        #myul li a:hover{
+            color: #0a3ff5;
+            font-weight: 400;
+        }
+        #myh2{
+            height: 50px;
+        }
+        #my-message{
+            height: 80px;
+        }
+        .intro-one{
+            background-color: #ffffff;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+        .intro-one p{
+            color: #777;
+        }
+    </style>
 </head>
 <body>
 <!--header starts-->
-<header class="main-header">
-    <div class="backbg-color">
-        <div class="navigation-bar">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+        <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                    <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
                         <!--navigation starts-->
-                        <nav class="navbar navbar-default">
+                        <nav class="navbar navbar-default" id="mynav">
+">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse"
                                         data-target="#myNavbar">
@@ -34,32 +81,37 @@
                                 </button>
                                 <a class="navbar-brand" href="#"><span class="grey">Li</span>the</a>
                             </div>
-                            <div class="collapse navbar-collapse navbar-right" id="myNavbar">
-                                <ul class="nav navbar-nav">
-                                    <li class="active"><a href="/demo">主页</a></li>
+                            <div class="collapse navbar-collapse navbar-right"
+                                 style="margin-right: 0px;padding-right: 30px;"
+                                 id="myNavbar">
+                                <ul class="nav navbar-nav" id="myul">
+                                    <li><a href="/demo">主页</a></li>
                                     <li><a href="javascript:void(0)" id="frequency">词频统计</a></li>
                                     <li><a href="javascript:void(0)" id="commentscount">日期评论数分析</a></li>
                                     <li><a href="javascript:void(0)" id="emotion">情感极性分析</a></li>
                                     <li><a href="javascript:void(0)" id="userlocation">用户特征</a></li>
-
-
                                 </ul>
                             </div>
                         </nav>
                         <!--navigation ends-->
                     </div>
                 </div>
+<header class="main-header">
+    <div class="backbg-color">
+        <div class="navigation-bar">
+            <div class="container">
+
             </div>
         </div>
         <!--banner starts-->
-        <div class="banner-text">
+        <div class="banner-text" style="padding-top: 0px">
             <div class="container">
                 <div class="row">
                     <div class="banner-info text-center">
-                        <h2><span class="grey">Innocent</span> - 影评大数据智能分析平台</h2>
+                        <h2 id="myh2"><span class="grey">Innocent</span> - 影评大数据智能分析平台</h2>
                     </div>
 
-                    <div class="banner-heading text-center">
+                    <div class="banner-heading text-center" id="my-message">
                         <h3 id="h3-message">{{ message }}</h3>
                     </div>
 
