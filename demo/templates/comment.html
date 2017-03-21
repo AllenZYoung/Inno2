@@ -21,6 +21,7 @@
 <!--header starts-->
 <header class="main-header">
     <div class="backbg-color">
+<<<<<<< Updated upstream
 {#        <div class="navigation-bar">#}
 {#            <div class="container">#}
 {#                <div class="row">#}
@@ -52,43 +53,79 @@
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
+=======
+{#        <div class="navigation-bar">#}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--navigation starts-->
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                        data-target="#myNavbar">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#">Lithe</a>
+                            </div>
+
+                            <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="/demo">主页</a></li>
+                                    <li><a href="/demo/freq">词频统计</a></li>
+                                    <li class="active"><a href="/demo/commentsnum">日期评论数分析</a></li>
+                                    <li><a href="">情感分析</a></li>
+                                    <li><a href="">评论摘要</a></li>
+                                    <li><a href="">用户特征</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <!--navigation ends-->
+                    </div>
+                    <div id="main" style="width: 1200px;height:600px;"></div>
+
+                </div>
+            </div>
+{#        </div>#}
+>>>>>>> Stashed changes
         <!--banner starts-->
 
-        <div class="row">
-            <div class="panel-body">
-                <table class="table bootstrap-datatable countries">
-                    <caption style="color:rgba(24, 25, 30, 0.7)"> {{ name }} </caption>
-                    <thead>
-                    <tr>
-                        <th>日期</th>
-                        <th>评价数量</th>
-                        <th>好评数量</th>
-                        <th>综合评价</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {#                            {% for item in data_source %}#}
-                    {#                            <tr>#}
-                    {#                                <td>{{ item.date }}</td>#}
-                    {#                                <td>{{ item.comments_num }}</td>#}
-                    {#                                <td>{{ item.good_comments_num }}</td>#}
-                    {#                                <td>#}
-                    {#                                    <div class="progress thin">#}
-                    {#                                        <div class="progress-bar progress-bar-danger" role="progressbar"#}
-                    {#                                             aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"#}
-                    {#                                             style="width: 73%">#}
-                    {#                                        </div>#}
-                    {#                                        <div class="progress-bar progress-bar-warning" role="progressbar"#}
-                    {#                                             aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"#}
-                    {#                                             style="width: 27%">#}
-                    {#                                        </div>#}
-                    {#                                    </div>#}
-                    {#                                </td>#}
-                    {#                            </tr>#}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        {#        <div class="row">#}
+        {#            <div class="panel-body">#}
+        {#                <table class="table bootstrap-datatable countries">#}
+        {#                    <caption style="color:rgba(24, 25, 30, 0.7)"> {{ name }} </caption>#}
+        {#                    <thead>#}
+        {#                    <tr>#}
+        {#                        <th>日期</th>#}
+        {#                        <th>评价数量</th>#}
+        {#                        <th>好评数量</th>#}
+        {#                        <th>综合评价</th>#}
+        {#                    </tr>#}
+        {#                    </thead>#}
+        {#                    <tbody>#}
+        {#                            {% for item in data_source %}#}
+        {#                            <tr>#}
+        {#                                <td>{{ item.date }}</td>#}
+        {#                                <td>{{ item.comments_num }}</td>#}
+        {#                                <td>{{ item.good_comments_num }}</td>#}
+        {#                                <td>#}
+        {#                                    <div class="progress thin">#}
+        {#                                        <div class="progress-bar progress-bar-danger" role="progressbar"#}
+        {#                                             aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"#}
+        {#                                             style="width: 73%">#}
+        {#                                        </div>#}
+        {#                                        <div class="progress-bar progress-bar-warning" role="progressbar"#}
+        {#                                             aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"#}
+        {#                                             style="width: 27%">#}
+        {#                                        </div>#}
+        {#                                    </div>#}
+        {#                                </td>#}
+        {#                            </tr>#}
+        {#                    </tbody>#}
+        {#                </table>#}
+        {#            </div>#}
+        {#        </div>#}
     </div>
 </header>
 <section class="intro-one">
@@ -105,85 +142,90 @@
     </div>
 
 </section>
-    <div id="main" style="width: 1200px;height:1000px;"></div>
-    <script type="text/javascript">
-        var countdata = function (echarts) {
+<script type="text/javascript">
+    var countdata = function (echarts) {
 
-            var myChart = echarts.init(document.getElementById('main'));
+        var myChart = echarts.init(document.getElementById('main'));
 
-            // 数据库数据插入
-            var dateDict = [
-                {% for one_data in data_source %}
-                    {date: '{{ one_data.comment_date }}', value: {{ one_data.comment_count }}},
-                {% endfor %}
-            ]
-            var date = []
+        // 数据库数据插入
+        var dateDict = [
+            {% for one_data in data_source %}
+                {date: '{{ one_data.comment_date }}', value: {{ one_data.comment_count }}},
+            {% endfor %}
+        ]
+        var date = []
 
-            for (var i = 0; i < dateDict.length; i++) {
-                var e = dateDict[i].date
-                date.push(e)
+        for (var i = 0; i < dateDict.length; i++) {
+            var e = dateDict[i].date
+            date.push(e)
+            // console.log('e', e)
+        }
+
+
+        // 循环每个城市的数据
+        var dateData = function (array) {
+            var data = []
+            for (var i = 0; i < array.length; i++) {
+                var e = array[i]
+                data.push(e)
                 // console.log('e', e)
             }
+            return data
+        }
 
-
-            // 循环每个城市的数据
-            var dateData = function (array) {
-                var data = []
-                for (var i = 0; i < array.length; i++) {
-                    var e = array[i]
-                    data.push(e)
-                    // console.log('e', e)
+        var option = {
+            title: {
+                left: 'left',
+                text: '日期-评论数据',
+            },
+            tooltip: {
+                trigger: 'axis',
+                show: true,
+            },
+            legend: {
+                data: ['评论数']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: date
                 }
-                return data
-            }
-
-            var option = {
-                title: {
-                    left: 'left',
-                    text: '日期-评论数据',
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    show: true,
-                },
-                legend: {
-                    data: ['评论数']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: date
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                    }
-                ],
-                series: [
-                    {
-                        name: "评论数",
-                        type: "line",
-                        data: dateDict,
-                        {#                    data: dateData(dateDict)#}
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                }
+            ],
+            series: [
+                {
+                    name: "评论数",
+                    type: "line",
+                    data: dateDict,
+                    {#                    data: dateData(dateDict)#}
+                    itemStyle: {
+                        normal: {
+                            color: 'rgb(105,89,205)'
+                        }
 
                     },
+                }
 
-                ]
-            };
-
-            myChart.setOption(option);
-            {#        myChart.showLoading();#}
-            myChart.hideLoading();
+            ]
         };
+
+        myChart.setOption(option);
+        myChart.showLoading();
+        myChart.hideLoading();
+    }
+        ;
         // 函数调用
         countdata(echarts)
 
-    </script>
-    {#echarts结束#}
+</script>
+{#echarts结束#}
 
 
-    <!--banner ends-->
+<!--banner ends-->
 <!--header ends-->
 
 
